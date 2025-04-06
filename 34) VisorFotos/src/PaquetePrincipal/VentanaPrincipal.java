@@ -6,6 +6,8 @@ package PaquetePrincipal;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -40,8 +42,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuArchivo = new javax.swing.JMenu();
         menuArchivoAbrir = new javax.swing.JMenuItem();
         menuArchivoCerrar = new javax.swing.JMenuItem();
+        menuCerrarTodo = new javax.swing.JMenuItem();
+        menuInfo = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         menuArchivoSalir = new javax.swing.JMenuItem();
+        menuVentana = new javax.swing.JMenu();
+        menuCascada = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,13 +77,46 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuArchivo.add(menuArchivoAbrir);
 
         menuArchivoCerrar.setText("Cerrar");
+        menuArchivoCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuArchivoCerrarActionPerformed(evt);
+            }
+        });
         menuArchivo.add(menuArchivoCerrar);
+
+        menuCerrarTodo.setText("Cerrar Todo");
+        menuCerrarTodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCerrarTodoActionPerformed(evt);
+            }
+        });
+        menuArchivo.add(menuCerrarTodo);
+
+        menuInfo.setText("Info");
+        menuInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuInfoActionPerformed(evt);
+            }
+        });
+        menuArchivo.add(menuInfo);
         menuArchivo.add(jSeparator1);
 
         menuArchivoSalir.setText("Salir");
         menuArchivo.add(menuArchivoSalir);
 
         barraMenus.add(menuArchivo);
+
+        menuVentana.setText("Ventana");
+
+        menuCascada.setText("Cascada");
+        menuCascada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCascadaActionPerformed(evt);
+            }
+        });
+        menuVentana.add(menuCascada);
+
+        barraMenus.add(menuVentana);
 
         setJMenuBar(barraMenus);
 
@@ -105,6 +144,53 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             vi.setVisible(true);
         }
     }//GEN-LAST:event_menuArchivoAbrirActionPerformed
+
+    private void menuArchivoCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuArchivoCerrarActionPerformed
+        // TODO add your handling code here:
+        VentanaInterna Vactiva = (VentanaInterna) panelInterno.getSelectedFrame();
+        if (Vactiva != null) {
+            Vactiva.dispose();
+        }
+    }//GEN-LAST:event_menuArchivoCerrarActionPerformed
+
+    private void menuInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuInfoActionPerformed
+        // TODO add your handling code here:
+        VentanaInterna Vactiva = (VentanaInterna) panelInterno.getSelectedFrame();
+        if (Vactiva != null) {
+            String titulo = Vactiva.getTitle();
+            
+            JOptionPane.showMessageDialog(null, "Camino de la imagen: \n" + titulo);
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay ninguna imagen seleccionada");
+        }
+    }//GEN-LAST:event_menuInfoActionPerformed
+
+    private void menuCerrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCerrarTodoActionPerformed
+        // TODO add your handling code here:
+        int i;
+        JInternalFrame v[] = panelInterno.getAllFrames();
+        
+        for(i = 0; i < v.length; i++){
+            v[i].dispose();
+        }
+    }//GEN-LAST:event_menuCerrarTodoActionPerformed
+
+    private void menuCascadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCascadaActionPerformed
+        // TODO add your handling code here:
+        int i;
+        int x,y;
+        
+        JInternalFrame v[] = panelInterno.getAllFrames();
+        x = 0;
+        y = 0;
+        
+        for(i = v.length - 1; i >=0; i--){
+            v[i].setSize(600,400);
+            v[i].setLocation(x,y);
+            x = x + 30;
+            y = y + 30;
+        }
+    }//GEN-LAST:event_menuCascadaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,6 +234,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuArchivoAbrir;
     private javax.swing.JMenuItem menuArchivoCerrar;
     private javax.swing.JMenuItem menuArchivoSalir;
+    private javax.swing.JMenuItem menuCascada;
+    private javax.swing.JMenuItem menuCerrarTodo;
+    private javax.swing.JMenuItem menuInfo;
+    private javax.swing.JMenu menuVentana;
     private javax.swing.JDesktopPane panelInterno;
     // End of variables declaration//GEN-END:variables
 }
